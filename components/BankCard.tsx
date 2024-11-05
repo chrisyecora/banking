@@ -2,6 +2,7 @@ import { formatAmount } from '@/lib/utils';
 import Link from 'next/link';
 import Image from 'next/image';
 import React from 'react';
+import Copy from './Copy';
 
 const BankCard = ({
     account,
@@ -10,20 +11,17 @@ const BankCard = ({
 }: CreditCardProps) => {
     return (
         <div className='flex flex-col'>
-            <Link href={`/transaction-history/?id=id`} className='bank-card'>
+            <Link
+                href={`/transaction-history/id=${account.appwriteItemId}`}
+                className='bank-card'
+            >
                 <div className='bank-card_content'>
                     <div>
                         <h1 className='text-16 font-semibold text-white'>
-                            {
-                                // account.name ||
-                                userName
-                            }
+                            {account.name}
                         </h1>
                         <p className='font-ibm-plex-serif font-black text-white'>
-                            {
-                                // formatAmount(account.currentBalance)
-                                0
-                            }
+                            {formatAmount(account.currentBalance)}
                         </p>
                     </div>
 
@@ -38,12 +36,7 @@ const BankCard = ({
                         </div>
                         <p className='text-14 font-semibold tracking-[1.1px] text-white'>
                             ●●●● ●●●● ●●●●{' '}
-                            <span className='text-16'>
-                                {
-                                    // account?.mask ||
-                                    '1111'
-                                }
-                            </span>
+                            <span className='text-16'>{account?.mask}</span>
                         </p>
                     </article>
                 </div>
@@ -73,7 +66,7 @@ const BankCard = ({
                 />
             </Link>
 
-            {/* {showBalance && <Copy title={account?.sharaebleId} />} */}
+            {showBalance && <Copy title={account?.shareableId} />}
         </div>
     );
 };

@@ -136,12 +136,15 @@ export function countTransactionCategories(
     const categoryCounts: { [category: string]: number } = {};
     let totalCount = 0;
 
+    const categoryTotals: { [category: string]: number } = {};
+
     // Iterate over each transaction
     transactions &&
         transactions.forEach((transaction) => {
             // Extract the category from the transaction
             const category = transaction.category;
 
+            // COUNTS
             // If the category exists in the categoryCounts object, increment its count
             if (categoryCounts.hasOwnProperty(category)) {
                 categoryCounts[category]++;
@@ -152,6 +155,10 @@ export function countTransactionCategories(
 
             // Increment total count
             totalCount++;
+
+            // MONEY TOTALS
+            categoryTotals[transaction.category] =
+                0 + Number(-1 * transaction.amount);
         });
 
     // Convert the categoryCounts object to an array of objects
@@ -161,6 +168,7 @@ export function countTransactionCategories(
         name: category,
         count: categoryCounts[category],
         totalCount,
+        totalSpent: categoryTotals[category],
     }));
 
     // Sort the aggregatedCategories array by count in descending order
